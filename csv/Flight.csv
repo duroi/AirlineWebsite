@@ -1,0 +1,4 @@
+flightnum,model,crewid,arriveairport,departairport,datearrive,timearrive,datedepart,timedepart
+700,Boeing 747,400,504,501,2022-05-22,12:00:00,2022-05-22,06:00:00
+701,Boeing 777,401,502,501,2022-05-22,12:00:00,2022-05-22,06:00:00
+702,Airbus A318,402,505,501,2022-05-23,12:00:00,2022-05-23,06:00:00
