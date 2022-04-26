@@ -22,8 +22,8 @@ app.get('/', (req, res) => {
     })
 })
 
-app.post('/flights', (req, res) => {
-  merchant_model.createMerchant(req.body)
+app.post('/register', (req,res) => {
+  airline_model.registerCustomer(req.body)
   .then(response => {
     res.status(200).send(response);
   })
@@ -32,6 +32,15 @@ app.post('/flights', (req, res) => {
   })
 })
 
+app.use('login', (req,res) => {
+  airline_model.loginCustomer(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
