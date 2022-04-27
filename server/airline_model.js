@@ -1,3 +1,4 @@
+const { response } = require("express");
 const pool = require("./db");
 
 //Database Queries
@@ -12,10 +13,48 @@ const getFlights = () => {
     }) 
   }
 
+const getBookings = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { customerthatbooked} = body
+    pool.query(`SELECT flightnum FROM book WHERE customerthatbooked=$1;`,[customerthatbooked], (error, results) => {
+      //FIXME: in above query we are selecting where customerthatbooked=1, but it should be checking for the id of the currently logged in user
+      // or, SELECT model, flightnum FROM book NATURAL JOIN flight WHERE customerthatbooked=1;
+      if (error) {
+        reject(error)
+      }
+      resolve(results.rows);
+    })
+  }) 
+}
+
+const addBooking = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { flightnum,customerthatbooked,customerflying } = body
+      pool.query('INSERT INTO book (flightnum,customerthatbooked,customerflying) VALUES ($1, $2, $3)', [flightnum,customerthatbooked,customerflying], (error, results) => {
+        if(error) {
+          reject(error)
+        }
+      // Below line is data in the fetch function bookFlight
+      resolve(`Flight number ${flightnum} added for user ${customerthatbooked}`)
+    })
+  })
+}
+
+const getModels = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { customerthatbooked} = body
+    pool.query('SELECT model FROM book NATURAL JOIN FLIGHT WHERE customerthatbooked=$1;', [customerthatbooked], (error, results) => {
+    if(error) {
+      reject(error)
+    }
+    resolve(results.rows);
+  })
+})
+}
 const registerCustomer = (body) => {
   return new Promise(function(resolve, reject) {
     const { dob,email,password,fname,lname } = body
-    pool.query('INSERT INTO INSERT INTO customer (dob,freqflynum,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
+    pool.query('INSERT INTO customer (dob,freqflynum,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
       if(error) {
         reject(error)
       }
@@ -24,17 +63,18 @@ const registerCustomer = (body) => {
   })
 }
 
-const loginCustomer = (body) => {
+const loginValidate = (body) => {
   return new Promise(function(resolve, reject) {
     const {email, password} = body
-    pool.query('SELECT EXISTS(SELECT * FROM customer WHERE email = $1 AND password = $2', [email, password],(error, results) => {
+    pool.query('SELECT EXISTS(SELECT * FROM customer WHERE email = $1 AND password = $2);', [email, password],(error, results) => {
       if (error){
           reject(error)
       }
-      resolve(`Login match : ${results.row[0]}`)
+      resolve(results.rows[0].exists)
     })
   })
 }
+
 const createPilot = (body) => {
     return new Promise(function(resolve, reject) {
         const { ID, name } = body
@@ -65,8 +105,11 @@ const deletePilot = () => {
 
 module.exports = {
     getFlights,
+    addBooking,
+    getModels,
+    getBookings,
     registerCustomer,
-    loginCustomer,
+    loginValidate,
     //createPilot,
     //deletePilot,
   }
