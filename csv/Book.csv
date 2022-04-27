@@ -1,2 +1,2 @@
-bookid,flightnum,customerthatbooked,customerflying
-900,700,800,800
+flightnum,customerthatbooked,customerflying
+700,1,1

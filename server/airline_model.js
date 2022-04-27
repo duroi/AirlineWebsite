@@ -3,7 +3,7 @@ const pool = require("./db");
 //Database Queries
 const getFlights = () => {
     return new Promise(function(resolve, reject) {
-      pool.query('SELECT * FROM flight ORDER BY flightnum ASC', (error, results) => {
+      pool.query('SELECT flightnum, airport1.code AS arriveairport, airport2.code AS departairport, datearrive, timearrive, datedepart, timedepart FROM flight JOIN airport as airport1 on arriveairport = airport1.airportid JOIN airport as airport2 ON departairport = airport2.airportid;', (error, results) => {
         if (error) {
           reject(error)
         }
@@ -58,6 +58,10 @@ const deletePilot = () => {
       })
     })
 }
+
+// fixme: look up a flight three letter code given flight number
+
+// fixme function to book a flight
 
 module.exports = {
     getFlights,
