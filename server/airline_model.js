@@ -101,7 +101,6 @@ const deletePilot = () => {
 
 // fixme: look up a flight three letter code given flight number
 
-// fixme function to book a flight
 
 module.exports = {
     getFlights,
