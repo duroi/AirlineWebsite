@@ -12,10 +12,47 @@ const getFlights = () => {
     }) 
   }
 
+  const getBookings = () => {
+    return new Promise(function(resolve, reject) {
+      pool.query(`SELECT flightnum FROM book WHERE customerthatbooked=test1@gmail.com;`, (error, results) => {
+        //FIXME: in above query we are selecting where customerthatbooked=1, but it should be checking for the id of the currently logged in user
+        // or, SELECT model, flightnum FROM book NATURAL JOIN flight WHERE customerthatbooked=1;
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    }) 
+  }
+
+  const getModels = () => {
+    return new Promise(function(resolve, reject) {
+      pool.query('SELECT model FROM book NATURAL JOIN FLIGHT WHERE customerthatbooked=test1@gmail.com;', (error, results) => {
+      if(error) {
+        reject(error)
+      }
+      resolve(results.rows);
+    })
+  })
+}
+
+const addBooking = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { flightnum,customerthatbooked,customerflying } = body
+      pool.query('INSERT INTO book (flightnum,customerthatbooked,customerflying) VALUES ($1, $2, $3)', [flightnum,customerthatbooked,customerflying], (error, results) => {
+        if(error) {
+          reject(error)
+        }
+      // Below line is data in the fetch function bookFlight
+      resolve(`Flight number ${flightnum} added for user ${customerthatbooked}`)
+    })
+  })
+}
+
 const registerCustomer = (body) => {
   return new Promise(function(resolve, reject) {
     const { dob,email,password,fname,lname } = body
-    pool.query('INSERT INTO INSERT INTO customer (dob,freqflynum,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
+    pool.query('INSERT INTO customer (dob,freqflynum,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
       if(error) {
         reject(error)
       }
@@ -35,7 +72,7 @@ const loginCustomer = (body) => {
     })
   })
 }
-const createPilot = (body) => {
+/*const createPilot = (body) => {
     return new Promise(function(resolve, reject) {
         const { ID, name } = body
         pool.query('INSERT INTO Pilot (ID, Name) VALUES ($1, $2) RETURNING *', [ID, name], (error, results) => {
@@ -57,14 +94,16 @@ const deletePilot = () => {
         resolve(`Pilot deleted with ID: ${ID}`)
       })
     })
-}
+}*/
 
 // fixme: look up a flight three letter code given flight number
 
-// fixme function to book a flight
 
 module.exports = {
     getFlights,
+    addBooking,
+    getModels,
+    getBookings,
     registerCustomer,
     loginCustomer,
     //createPilot,

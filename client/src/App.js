@@ -1,14 +1,21 @@
 import React, {useState, useEffect} from 'react';
+import BookFlight from './BookFlight';
+import ShowFlights from './ShowFlights';
 
 function App() {
   const [Flights, setFlights] = useState(false);
+  //const [user, setUser] = useState();
+  const [Bookings, setBookings] = useState(false);
+  const [Models, setModels] = useState(false);
 
   useEffect(() => {
     getFlight();
+    getBookings();
+    getModels();
   }, []);
 
   function getFlight() {
-    fetch('http://localhost:3001')
+    fetch('http://localhost:3001/')
       .then(response => {
         return response.text();
       })
@@ -18,7 +25,28 @@ function App() {
   }
 
   
-  function createFlight() {
+  function getBookings() {
+    fetch('http://localhost:3001/bookings')
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        setBookings(data);
+      });
+  }
+
+  function getModels() {
+    fetch('http://localhost:3001/models')
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        setModels(data);
+      });
+  }
+
+  
+  /*function createFlight() {
     let name = prompt('Enter Flight name');
     let email = prompt('Enter Flight email');
 
@@ -51,16 +79,18 @@ function App() {
         alert(data);
         getFlight();
       });
-  }
+  }*/
 
 
   return (
     <div>
-      {Flights ? Flights : 'There is no Flight data available'}
-      <br />
-      <button onClick={createFlight}>Add</button>
-      <br />
-      <button onClick={deleteFlight}>Delete</button>
+     {console.log("in app.js bookings is " + Bookings)}
+      {Flights && Bookings && Models ?
+                <ShowFlights flights={Flights} bookings={Bookings} models={Models}/>
+              :
+              <p>404 not found.</p>
+      }
+      
     </div>
   );
 

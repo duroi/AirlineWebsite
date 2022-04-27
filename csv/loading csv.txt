@@ -1,7 +1,0 @@
-\copy flightattendant FROM 'csv/FlightAttendant.csv' WITH DELIMITER ',' CSV HEADER;
-\copy copilot FROM 'csv/Copilot.csv' WITH DELIMITER ',' CSV HEADER;
-\copy pilot FROM 'csv/Pilot.csv' WITH DELIMITER ',' CSV HEADER;
-\copy crew FROM 'csv/Crew.csv' WITH DELIMITER ',' CSV HEADER;
-\copy aircraft FROM 'csv/Aircraft.csv' WITH DELIMITER ',' CSV HEADER;
-\copy airport FROM 'csv/Airport.csv' WITH DELIMITER ',' CSV HEADER;
-\copy flight FROM 'csv/Flight.csv' WITH DELIMITER ',' CSV HEADER;

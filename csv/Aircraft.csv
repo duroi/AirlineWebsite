@@ -1,6 +1,22 @@
 model,numseats,numflightattendants
 Douglas DC-3,21,3
-Boeing 747,366,5
-Boeing 777,301,5
+Boeing 737-7,172,6
+Boeing 737-8,210,6
+Boeing 737-9,162,6
+Boeing 747-2,366,11
+Boeing 747-8,410,11
+Boeing 777-300ER,301,9
+Boeing 777x,368,9
 Boeing 787,242,5
-Airbus A318,107,3
+Airbus A318,107,5
+Airbus A319,128,5
+Airbus A320,150,5
+Airbus A321,185,5
+Airbus A330,293,7
+Airbus A340,279,7
+Airbus A350,306,9
+Airbus A380,868,11
+CRJ-200,26,3
+CRJ-900,51,4
+ERJ-145,50,3
+Dash 8-400,80,3
