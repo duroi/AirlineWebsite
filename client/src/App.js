@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import BookFlight from './BookFlight';
-import ShowFlights from './ShowFlights';
 
 import {Routes, Route, Navigate, Router, Redirect} from "react-router-dom";
 
