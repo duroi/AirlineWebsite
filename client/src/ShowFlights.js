@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import BookFlight from './BookFlight';
 
-function ShowFlights(flights) {
+function ShowFlights(props) {
 
   const[isBooking, setIsBooking] = useState(false);
   const[currentFlightNumber, setCurrentFlightNumber] = useState(0)
-
-  let flightsParsed = JSON.parse(flights.flights);
+  
+  // Make sure to use props when multiple props are being used
+  let flightsParsed = JSON.parse(props.flights);
+  let bookingsParsed = JSON.parse(props.bookings);
+  let modelsParsed = JSON.parse(props.models);
 
   let book = (flightNum) => {
     setCurrentFlightNumber(flightNum)
@@ -14,17 +17,46 @@ function ShowFlights(flights) {
     setIsBooking(true)
   }
 
-  let back = () =>  {
+  const backButton = () =>  {
     setIsBooking(false)
   }
 
+  async function bookFlight() {
+    fetch('http://localhost:3001/book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({flightnum: currentFlightNumber,
+                            customerthatbooked: 'test1@gmail.com',
+                            customerflying: 'test1@gmail.com'}),
+    })
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        console.log(data);
+      });
+   setIsBooking(false)  
+  }
+  
+
   return (
     
-    <div>
+     <div>
       {isBooking ? 
-        <BookFlight flightNumber={currentFlightNumber} back={back}/> 
-                 : <div> 
-                   Select a flight from the below list to book. <br />
+          <div>
+            <p>
+              Flight Number: {currentFlightNumber} <br />
+              Confirm that this is the flight you want to book. <button onClick={() => bookFlight()}>Book Flight</button> <br/><br/>
+              <button onClick={() => setIsBooking(false)}>Back</button>
+              
+            </p>
+          </div>
+        
+            : 
+            <div> 
+                   <h2>Select a flight from the below list to book.</h2>
               {
             
             flightsParsed.map((element) => {
@@ -41,22 +73,38 @@ function ShowFlights(flights) {
               }
           )
             }
+
+            <h2>Here are your current bookings: </h2>
+            {console.log(bookingsParsed)}
+
+            {
+            
+            bookingsParsed.map((element) => {
+              return <p>
+                  Flight Number: {element.flightnum}
+              </p>
+            }
+            )
+          }
+
+          {
+            
+            modelsParsed.map((element) => {
+              return <p>
+                  Aircraft Model: {element.model}
+              </p>
+            }
+            )
+          }
           </div>
           }
         
         
         {
         }
-        
-            
-           
-                
-        
-    
+
     </div>
   )
 }
 
 export default ShowFlights
-
-//
