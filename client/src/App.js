@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import BookFlight from './BookFlight';
-import ShowFlights from './ShowFlights';
+//import BookFlight from './BookFlight';
+//import ShowFlights from './ShowFlights';
 
 import {Routes, Route, Navigate, Router, Redirect} from "react-router-dom";
 
@@ -89,7 +89,7 @@ const App = () => {
           {console.log(Models)}
 
 
-          <Route path="/" element = {Flights && Bookings && Models ? <ShowFlights flights={Flights} bookings={Bookings} models={Models}/>: <div>No Flights Available</div>}></Route>
+          <Route path="/" element = {Flights && Bookings && Models ? <ShowFlights flights={Flights} bookings={Bookings} models={Models}/> : <div>No Flights Available</div>}></Route>
           <Route path="/Register" element = {<Register />}></Route>
 
       </Routes>
@@ -97,3 +97,5 @@ const App = () => {
   }
 }
 export default App
+
+//           <button onClick={() => setToken(false)}></button>
