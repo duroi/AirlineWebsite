@@ -1,9 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-
-//import BookFlight from './BookFlight';
-//import ShowFlights from './ShowFlights';
-
 import {Routes, Route, Navigate, Router, Redirect} from "react-router-dom";
 
 import Login from "./pages/login/login";
@@ -69,6 +65,9 @@ const App = () => {
         setModels(data);
       });
   }
+
+
+  //Check for token, redirect to login page if false.
   if(!token) {
 
     return(
@@ -82,6 +81,8 @@ const App = () => {
     );
     
   }
+
+  //Check for token, redirect to book flights page if true.
   else if (token){
     return(
       <Routes>

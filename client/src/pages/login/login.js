@@ -4,6 +4,7 @@ import { useState } from "react";
 
 var fetchSuccess = false;
 
+//validate user login
 async function loginValidate(loginInfo) {
   
   return fetch('http://localhost:3001/loginValidate', {
@@ -20,21 +21,17 @@ async function loginValidate(loginInfo) {
       localStorage.removeItem("token");
 
     }
-
     return response.json();
-
   })
   .then(data => {
     console.log(data, "Data")
-
     if (data) {
-
       fetchSuccess = true;
-
     }
   });
 }
 
+//create token on successfuly login
 async function loginSuccess(loginInfo) {
   return fetch('http://localhost:3001/loginSuccess', {
     method: 'POST',
@@ -53,9 +50,10 @@ export default function Login({setToken}) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(email)
-    console.log(password)
-
+    //console.log(email)
+    //console.log(password)
+    
+    
     try {
       alert(
           "Your email: " +
@@ -77,7 +75,7 @@ export default function Login({setToken}) {
     }
     else{
 
-      alert("No match for login credentials found");
+      alert("Email/password incorrect, do you have an account?");
 
     }
     
@@ -90,7 +88,7 @@ export default function Login({setToken}) {
   
 
   return (
-     
+     //Login page
     <div>
       <h1>Welcome</h1>
       <h2>Login:</h2>

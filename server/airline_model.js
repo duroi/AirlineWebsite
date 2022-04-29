@@ -2,6 +2,8 @@ const { response } = require("express");
 const pool = require("./db");
 
 //Database Queries
+
+//Get list of flights with arrival/departal airport codes, dates, and times.
 const getFlights = () => {
     return new Promise(function(resolve, reject) {
       pool.query('SELECT flightnum, airport1.code AS arriveairport, airport2.code AS departairport, datearrive, timearrive, datedepart, timedepart FROM flight JOIN airport as airport1 on arriveairport = airport1.airportid JOIN airport as airport2 ON departairport = airport2.airportid;', (error, results) => {
@@ -13,6 +15,8 @@ const getFlights = () => {
     }) 
   }
 
+
+//Get list of flights that the customer has booked.
 const getBookings = (body) => {
   return new Promise(function(resolve, reject) {
     const { customerthatbooked} = body
@@ -27,6 +31,7 @@ const getBookings = (body) => {
   }) 
 }
 
+//Book a flight under the customer.
 const addBooking = (body) => {
   return new Promise(function(resolve, reject) {
     const { flightnum,customerthatbooked,customerflying } = body
@@ -40,6 +45,7 @@ const addBooking = (body) => {
   })
 }
 
+//Get list of aircraft models of the flights the customer has booked.
 const getModels = (body) => {
   return new Promise(function(resolve, reject) {
     const { customerthatbooked} = body
@@ -51,6 +57,8 @@ const getModels = (body) => {
   })
 })
 }
+
+//Create new customer into database. 
 const registerCustomer = (body) => {
   return new Promise(function(resolve, reject) {
     const { dob,email,password,fname,lname } = body
@@ -63,6 +71,7 @@ const registerCustomer = (body) => {
   })
 }
 
+//Check if customer information exists in database.
 const loginValidate = (body) => {
   return new Promise(function(resolve, reject) {
     const {email, password} = body
@@ -75,6 +84,7 @@ const loginValidate = (body) => {
   })
 }
 
+//Create new pilot
 const createPilot = (body) => {
     return new Promise(function(resolve, reject) {
         const { ID, name } = body
@@ -87,6 +97,8 @@ const createPilot = (body) => {
     })
 }
 
+
+//Delete pilot
 const deletePilot = () => {
     return new Promise(function(resolve, reject) {
       const ID = parseInt(request.params.ID)
