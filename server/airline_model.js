@@ -54,7 +54,7 @@ const getModels = (body) => {
 const registerCustomer = (body) => {
   return new Promise(function(resolve, reject) {
     const { dob,email,password,fname,lname } = body
-    pool.query('INSERT INTO customer (dob,freqflynum,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
+    pool.query('INSERT INTO customer (dob,email,password,fname,lname) VALUES ($1, $2, $3, $4, $5)', [dob,email,password,fname,lname], (error, results) => {
       if(error) {
         reject(error)
       }

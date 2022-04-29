@@ -5,7 +5,7 @@ import { useState } from "react";
 var fetchSuccess = false;
 
 async function loginValidate(loginInfo) {
-
+  
   return fetch('http://localhost:3001/loginValidate', {
     method: 'POST',
     headers: {

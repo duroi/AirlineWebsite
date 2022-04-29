@@ -45,67 +45,44 @@ function ShowFlights(props) {
   
 
   return (
-    
-     <div>
-                 {console.log(token.email)}
+    <div>
+    {isBooking ? 
+      <div>
+        <p> Flight Number: {currentFlightNumber} <br />
+            Confirm that this is the flight you want to book. <button onClick={() => bookFlight()}>Book Flight</button> <br/><br/>
+            <button onClick={() => setIsBooking(false)}>Back</button>
+        </p>
+      </div>
+    : 
+      <div> 
+        <h2>Select a flight from the below list to book.</h2>
+        {flightsParsed.map((element) => {
+          return  <p>
+            Flight number:  {element.flightnum} &nbsp;
+            Arrive Airport: {element.arriveairport} &nbsp;
+            Depart Airport: {element.departairport} &nbsp;
+            Date arriving:  {element.datearrive.substring(0,10)} &nbsp;
+            Time arriving:  {element.timearrive.substring(0,8)} &nbsp;
+            Date departing: {element.datedepart.substring(0,10)} &nbsp;
+            Time departing: {element.timedepart.substring(0,8)} <br />
+            <button onClick={() => {book(element.flightnum)}}>Book me</button> </p>
+          })
+        }
 
-      {isBooking ? 
-          <div>
-            <p>
-              Flight Number: {currentFlightNumber} <br />
-              Confirm that this is the flight you want to book. <button onClick={() => bookFlight()}>Book Flight</button> <br/><br/>
-              <button onClick={() => setIsBooking(false)}>Back</button>
-              
-            </p>
-          </div>
-        
-            : 
-            <div> 
-                   <h2>Select a flight from the below list to book.</h2>
-              {
-            
-            flightsParsed.map((element) => {
-            return  <p>
-                Flight number:  {element.flightnum} &nbsp;
-                Arrive Airport: {element.arriveairport} &nbsp;
-                Depart Airport: {element.departairport} &nbsp;
-                Date arriving:  {element.datearrive.substring(0,10)} &nbsp;
-                Time arriving:  {element.timearrive.substring(0,8)} &nbsp;
-                Date departing: {element.datedepart.substring(0,10)} &nbsp;
-                Time departing: {element.timedepart.substring(0,8)} <br />
-                <button onClick={() => {book(element.flightnum)}}>Book me</button> 
-                  </p>
-              }
-          )
-            }
-
-            <h2>Here are your current bookings: </h2>
-            {console.log(bookingsParsed)}
-
-            {
-            
-            bookingsParsed.map((element) => {
-              return <p>
-                  Flight Number: {element.flightnum}
-              </p>
-            }
-            )
+        <h2>Here are your current bookings: </h2>
+          {console.log(bookingsParsed)}
+          {bookingsParsed.map((element) => {
+            return <p>
+              Flight Number: {element.flightnum} </p>
+            })
           }
 
-          {
-            
-            modelsParsed.map((element) => {
-              return <p>
-                  Aircraft Model: {element.model}
-              </p>
-            }
-            )
+          {modelsParsed.map((element) => {
+            return <p>
+              Aircraft Model: {element.model} </p>
+            })
           }
           </div>
-          }
-        
-        
-        {
         }
 
     </div>

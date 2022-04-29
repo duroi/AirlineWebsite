@@ -6,4 +6,3 @@
 \copy airport FROM 'csv/Airport.csv' WITH DELIMITER ',' CSV HEADER;
 \copy flight FROM 'csv/Flight.csv' WITH DELIMITER ',' CSV HEADER;
 \copy customer(dob,email,password,fname,lname) FROM 'csv/Customer.csv' WITH DELIMITER ',' CSV HEADER;
-\copy book(flightnum,customerthatbooked,customerflying) FROM 'csv/Book.csv' WITH DELIMITER ',' CSV HEADER;

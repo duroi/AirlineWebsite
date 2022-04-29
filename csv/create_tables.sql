@@ -1,3 +1,5 @@
+CREATE DATABASE AirlineWebsite;
+
 CREATE TABLE FlightAttendant(
     ID INTEGER PRIMARY KEY, 
     Name VARCHAR(50)
@@ -38,16 +40,15 @@ CREATE TABLE Flight(
     TimeDepart TIME with time zone
 );
 CREATE TABLE Customer(
-    ID INTEGER PRIMARY KEY, 
-    DOB DATE, 
-    FreqFlyNum INTEGER, 
+    DOB DATE,
+    Email VARCHAR(50) PRIMARY KEY, 
 	Password VARCHAR(50),
     Fname VARCHAR(50), 
     Lname VARCHAR(50)
 );
 CREATE TABLE Book(
-    BookID INTEGER PRIMARY KEY, 
+    BookID SERIAL PRIMARY KEY, 
     FlightNum INTEGER REFERENCES Flight, 
-    CustomerThatBooked INTEGER REFERENCES Customer, 
-    CustomerFlying INTEGER REFERENCES Customer
+    CustomerThatBooked VARCHAR(50) REFERENCES Customer, 
+    CustomerFlying VARCHAR(50) REFERENCES Customer
 );
