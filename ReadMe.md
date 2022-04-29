@@ -12,5 +12,5 @@
 4. Run the commands in loading_csv.txt to populate the tables
 
 ===============  Running  ===============
-6. cd to /server, run "node index" to start server
-7. cd to /client, run "npm start" to start client
+1. cd to /server, run "node index" to start server
+2. cd to /client, run "npm start" to start client
